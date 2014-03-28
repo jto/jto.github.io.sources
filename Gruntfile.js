@@ -4,6 +4,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
+  var _site = '../jto.github.io';
+  var _lessFiles = {};
+  _lessFiles[_site + "/assets/css/main.css"] = "_assets/less/main.less";
+  _lessFiles[_site + "/assets/css/blog.css"] = "_assets/less/blog.less";
+  _lessFiles[_site + "/assets/css/resume.css"] = "_assets/less/resume.less";
+
   grunt.initConfig({
 
     watch: {
@@ -32,7 +38,7 @@ module.exports = function(grunt) {
     // Generate _site using jekyll
     shell: {
       jekyll: {
-        command: 'rm -rf _site/*; jekyll --no-auto',
+        command: 'rm -rf ' +  _site + '/*; jekyll  build -d ' + _site,
         stdout: true
       }
     },
@@ -43,21 +49,17 @@ module.exports = function(grunt) {
           paths: ["_assets/less"],
           strictImports: true
         },
-        files: {
-          "_site/assets/css/main.css": "_assets/less/main.less",
-          "_site/assets/css/blog.css": "_assets/less/blog.less",
-          "_site/assets/css/resume.css": "_assets/less/resume.less"
-        }
+        files: _lessFiles
       }
     },
 
     copy: {
       development: {
         files: [
-          { expand: true, cwd: '_assets', src: ['articles/**'], dest: '_site/assets/' },
-          { expand: true, cwd: '_assets', src: ['js/*'], dest: '_site/assets/' },
-          { expand: true, cwd: '_assets', src: ['images/*'], dest: '_site/assets/' },
-          { expand: true, cwd: '_assets', src: ['font/*'], dest: '_site/assets/' },
+          { expand: true, cwd: '_assets', src: ['articles/**'], dest: _site + '/assets/' },
+          { expand: true, cwd: '_assets', src: ['js/*'], dest: _site + '/assets/' },
+          { expand: true, cwd: '_assets', src: ['images/*'], dest: _site + '/assets/' },
+          { expand: true, cwd: '_assets', src: ['font/*'], dest: _site + '/assets/' },
         ]
       }
     }
