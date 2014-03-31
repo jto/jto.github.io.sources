@@ -1,18 +1,35 @@
 @import '_jto';
 
 .gist {
-	.gist-file { border: 0 !important;}
+
+	.gist-file { border-radius: 2px; }
+
+	.line-numbers {
+		.line-number {
+			font-size: .7em;
+			line-height: 21px;
+		}
+	}
+
+
 	.line-numbers, .gist-meta{
 		background: @bg !important;
 		color: @primary !important;
 		border: 0 !important;
 		opacity: .6;
+
 		> * {
 			color: @primary !important;
+			border: 0 !important;
 			opacity: .6;
 		}
 	}
 
+	.gist-data { border: 0 !important; }
+	.gist-meta {
+		background: #ececec !important;
+
+	}
 	.gist-meta *{ font-size: .9em !important; }
 
 	.file-data { background-color: @bg; }
