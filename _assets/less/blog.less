@@ -43,35 +43,44 @@ html, body {
 
   > * {
     line-height: 40px;
-    margin: 15px 0;
     text-align: center;
   }
 
-  .hi {
+  .logo {
     display: block;
-    font-family: 'Open Sans';
-    text-align: center;
-    margin: 0px auto;
-    font-style: italic;
-    font-size: 18px;
-    width: 40px;
-    border-radius: 25px 25px 1px 25px;
+    text-decoration: none;
 
-    color: @grey;
-    background: @orange;
-    text-shadow: -1px 1px @orange-shadow;
+    .hi {
+      font-family: 'Open Sans';
+      font-style: italic;
 
-    position: relative;
-  }
+      display: block;
+      text-align: center;
+      margin: 0px auto;
+      font-size: 18px;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 25px 25px 1px 25px;
 
-  .me {
-    color: @blue;
-    font-size: 14px;
-    height: auto;
-    text-align: center;
-    display: block;
-    line-height: 18px;
-    margin: 10px auto 10px auto;
+      color: @grey;
+      background: @orange;
+      text-shadow: -1px 1px @orange-shadow;
+
+      position: relative;
+    }
+
+    .me {
+      font-family: 'Open Sans';
+      font-style: italic;
+      color: @blue;
+      font-size: 14px;
+      height: auto;
+      text-align: center;
+      display: block;
+      line-height: 18px;
+      margin: 10px auto 10px auto;
+    }
   }
 
   ul.social {
@@ -165,7 +174,7 @@ html, body {
     border-left: solid 4px @green;
     padding: 0 15px;
     margin: 15px 0;
-    font-size: 14px;
+    font-size: 18px;
 
     .from {
       display: block;
@@ -183,9 +192,7 @@ html, body {
 
   .warning {
     border-color: @orange;
-    background: @yellow;
     padding: 10px;
-    font-style: italic;
   }
 
   pre {
