@@ -1,0 +1,88 @@
+@import '_jto';
+
+.gist {
+	.gist-file { border: 0 !important;}
+	.line-numbers, .gist-meta{
+		background: @bg !important;
+		color: @primary !important;
+		border: 0 !important;
+		opacity: .6;
+		> * {
+			color: @primary !important;
+			opacity: .6;
+		}
+	}
+
+	.gist-meta *{ font-size: .9em !important; }
+
+	.file-data { background-color: @bg; }
+	.highlight { background-color: @bg; color: @primary }
+	.highlight .c { color: @secondary } /* Comment */
+	.highlight .err { color: @primary } /* Error */
+	.highlight .g { color: @primary } /* Generic */
+	.highlight .k { color: @others } /* Keyword */
+	.highlight .l { color: @primary } /* Literal */
+	.highlight .n { color: @primary } /* Name */
+	.highlight .o { color: @others } /* Operator */
+	.highlight .x { color: @constants } /* Other */
+	.highlight .p { color: @primary } /* Punctuation */
+	.highlight .cm { color: @secondary } /* Comment.Multiline */
+	.highlight .cp { color: @others } /* Comment.Preproc */
+	.highlight .c1 { color: @secondary } /* Comment.Single */
+	.highlight .cs { color: @others } /* Comment.Special */
+	.highlight .gd { color: @strings } /* Generic.Deleted */
+	.highlight .ge { color: @primary; font-style: italic } /* Generic.Emph */
+	.highlight .gr { color: @special } /* Generic.Error */
+	.highlight .gh { color: @constants } /* Generic.Heading */
+	.highlight .gi { color: @others } /* Generic.Inserted */
+	.highlight .go { color: @primary } /* Generic.Output */
+	.highlight .gp { color: @primary } /* Generic.Prompt */
+	.highlight .gs { color: @primary; font-weight: bold } /* Generic.Strong */
+	.highlight .gu { color: @constants } /* Generic.Subheading */
+	.highlight .gt { color: @primary } /* Generic.Traceback */
+	.highlight .kc { color: @constants } /* Keyword.Constant */
+	.highlight .kd { color: @reserved } /* Keyword.Declaration */
+	.highlight .kn { color: @others } /* Keyword.Namespace */
+	.highlight .kp { color: @others } /* Keyword.Pseudo */
+	.highlight .kr { color: @reserved } /* Keyword.Reserved */
+	.highlight .kt { color: @special } /* Keyword.Type */
+	.highlight .ld { color: @primary } /* Literal.Date */
+	.highlight .m { color: @strings } /* Literal.Number */
+	.highlight .s { color: @strings } /* Literal.String */
+	.highlight .na { color: @primary } /* Name.Attribute */
+	.highlight .nb { color: #B58900 } /* Name.Builtin */
+	.highlight .nc { color: @reserved } /* Name.Class */
+	.highlight .no { color: @constants } /* Name.Constant */
+	.highlight .nd { color: @reserved } /* Name.Decorator */
+	.highlight .ni { color: @constants } /* Name.Entity */
+	.highlight .ne { color: @constants } /* Name.Exception */
+	.highlight .nf { color: @reserved } /* Name.Function */
+	.highlight .nl { color: @primary } /* Name.Label */
+	.highlight .nn { color: @primary } /* Name.Namespace */
+	.highlight .nx { color: @primary } /* Name.Other */
+	.highlight .py { color: @primary } /* Name.Property */
+	.highlight .nt { color: @reserved } /* Name.Tag */
+	.highlight .nv { color: @reserved } /* Name.Variable */
+	.highlight .ow { color: @others } /* Operator.Word */
+	.highlight .w { color: @primary } /* Text.Whitespace */
+	.highlight .mf { color: @strings } /* Literal.Number.Float */
+	.highlight .mh { color: @strings } /* Literal.Number.Hex */
+	.highlight .mi { color: @strings } /* Literal.Number.Integer */
+	.highlight .mo { color: @strings } /* Literal.Number.Oct */
+	.highlight .sb { color: @secondary } /* Literal.String.Backtick */
+	.highlight .sc { color: @strings } /* Literal.String.Char */
+	.highlight .sd { color: @primary } /* Literal.String.Doc */
+	.highlight .s2 { color: @strings } /* Literal.String.Double */
+	.highlight .se { color: @constants } /* Literal.String.Escape */
+	.highlight .sh { color: @primary } /* Literal.String.Heredoc */
+	.highlight .si { color: @strings } /* Literal.String.Interpol */
+	.highlight .sx { color: @strings } /* Literal.String.Other */
+	.highlight .sr { color: @special } /* Literal.String.Regex */
+	.highlight .s1 { color: @strings } /* Literal.String.Single */
+	.highlight .ss { color: @strings } /* Literal.String.Symbol */
+	.highlight .bp { color: @reserved } /* Name.Builtin.Pseudo */
+	.highlight .vc { color: @reserved } /* Name.Variable.Class */
+	.highlight .vg { color: @reserved } /* Name.Variable.Global */
+	.highlight .vi { color: @reserved } /* Name.Variable.Instance */
+	.highlight .il { color: @strings } /* Literal.Number.Integer.Long */
+}
