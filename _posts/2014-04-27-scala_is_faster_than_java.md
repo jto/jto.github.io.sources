@@ -158,6 +158,7 @@ This particular example proves that even though Scala has some overhead, its sup
 		display: block;
 		height: 400px;
 		width: 500px;
+		margin: 0 auto;
 	}
 </style>
 <script type="text/javascript">
