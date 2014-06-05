@@ -79,9 +79,9 @@ tags: Julien Tournay, scala, play, functional programming
 
         <h2>and I write about it</h3>
 
-        <ul class="articles">
+        <ul class="articles" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
           {% for post in site.posts %}
-            <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+            <li><a href="{{ post.url }}" itemprop="url">{{ post.title }}</a></li>
           {% endfor %}
         </ul>
       </section>
