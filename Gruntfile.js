@@ -17,9 +17,9 @@ module.exports = function(grunt) {
         files: ['_assets/less/*.less'],
         tasks: 'less-build'
       },
-      js: {
-        files: ['_assets/js/*.js'],
-        tasks: 'js-copy'
+      assets: {
+        files: ['_assets/*'],
+        tasks: 'assets-copy'
       },
       jekyllSources: {
         files: [
@@ -60,6 +60,7 @@ module.exports = function(grunt) {
           { expand: true, cwd: '_assets', src: ['js/*'], dest: _site + '/assets/' },
           { expand: true, cwd: '_assets', src: ['images/*'], dest: _site + '/assets/' },
           { expand: true, cwd: '_assets', src: ['font/*'], dest: _site + '/assets/' },
+          { expand: true, cwd: '_assets', src: ['scala_is_faster_than_java/*'], dest: _site + '/assets/' }
         ]
       }
     }
@@ -67,8 +68,8 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('less-build', ['less:development']);
-  grunt.registerTask('js-copy', ['copy:development']);
-  grunt.registerTask('jekyll-build', ['shell:jekyll','less-build', 'js-copy']);
+  grunt.registerTask('assets-copy', ['copy:development']);
+  grunt.registerTask('jekyll-build', ['shell:jekyll','less-build', 'assets-copy']);
   grunt.registerTask('default', 'watch');
 
 };
