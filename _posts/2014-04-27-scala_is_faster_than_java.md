@@ -45,7 +45,7 @@ When implementing the API, I didn't focus much on performances. My primary objec
 
 ### The test protocol
 
-The benchmark consist of parsing and validating Json objects stored in a file. The data are extracted from [the Last.fm Dataset](http://labrosa.ee.columbia.edu/millionsong/lastfm). The JSON structure has been modified a bit for easier parsing (using the awesome [jq](http://stedolan.github.io/jq/)). The code is hosted [here](https://github.com/jto/validation-bench)
+The benchmark consists of parsing and validating Json objects stored in a file. The data are extracted from [the Last.fm Dataset](http://labrosa.ee.columbia.edu/millionsong/lastfm). The JSON structure has been modified a bit for easier parsing (using the awesome [jq](http://stedolan.github.io/jq/)). The code is hosted [here](https://github.com/jto/validation-bench)
 
 The performances are measured using a series of scalameter micro-benchmarks. Both APIs are using Jackson for parsing JSON.
 
@@ -140,7 +140,7 @@ How do we implement the same thing using the unified validation API ?
 
 <script src="https://gist.github.com/jto/5ec094ab4fd40f699b88.js?file=7_extend.scala"></script>
 
-Yep, that's 6 lines of codes. I'm confident anybody can graps it.
+Yep, that's 6 lines of codes. I'm confident anybody can grasp it.
 
 Now, what if I have a `min` rule, a `max` rule, and I want to create a `between` rule ? That's easy. Rules compose.
 
