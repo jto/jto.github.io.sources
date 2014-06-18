@@ -39,13 +39,13 @@ Here's a port of the Json validation scenario. Note that this time, we are valid
 
 <script src="https://gist.github.com/jto/5ec094ab4fd40f699b88.js?file=3_example.scala"></script>
 
-When implementing the API, I didn't focus much on performances. My primary objectives were correctness, compositionality, and typesafety. Actually some design choices, like making every validator lazily evaluated, have a negative impact on performances. Let's how it performs.
+When implementing the API, I didn't focus much on performances. My primary objectives were correctness, compositionality, and typesafety. Actually some design choices, like making every validator lazily evaluated, have a negative impact on performances. Let's see how it performs.
 
 ## Benchmark
 
 ### The test protocol
 
-The benchmark consists of parsing and validating Json objects stored in a file. The data are extracted from [the Last.fm Dataset](http://labrosa.ee.columbia.edu/millionsong/lastfm). The JSON structure has been modified a bit for easier parsing (using the awesome [jq](http://stedolan.github.io/jq/)). The code is hosted [here](https://github.com/jto/validation-bench)
+The benchmark consists of parsing and validating Json objects stored in a file. The data are extracted from [the Last.fm Dataset](http://labrosa.ee.columbia.edu/millionsong/lastfm). The JSON structure has been modified a bit for easier parsing (using the awesome [jq](http://stedolan.github.io/jq/)). The code is hosted [here](https://github.com/jto/validation-bench).
 
 The performances are measured using a series of scalameter micro-benchmarks. Both APIs are using Jackson for parsing JSON.
 
