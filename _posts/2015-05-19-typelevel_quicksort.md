@@ -13,15 +13,13 @@ Most people know that Scala has a pretty advanced type system. In this post, I g
 
 TODO
 
-## The missing parts
-
-### Natural Numbers
+## Natural Numbers
 
 First thing first, if we're going to implement a sort algorithm, we need something to sort. We'll be using natural numbers.
 Of course, there's no natural numbers available to use out of the box in Scala's type system. We need to create a type for each and every natural number!
 Creating an infinity of types might end up being a little time consuming, so we'll do something a little smarter. We'll use MATH!
 
-#### Peano's axioms
+### Peano's axioms
 
 Peano's axioms are a simple way to formally define what natural numbers are.
 
@@ -58,16 +56,16 @@ Having defined those classes, we can represent any Natural number. Let's defined
 
 easy-peasy :)
 
-#### Basic arithmetic
+### Basic arithmetic
 
 Just to prove that's that those number are actually usable, we're going to implement addition.
-Again Peano tells us how to do that:
+Again Peano tells us how to do that (image taken from wikipedia):
 
 ![Peano's sum](http://upload.wikimedia.org/math/9/5/d/95dd1dc28b7774e45c5be05328e4612c.png "Image from wikipedia")
 
 It might not be obvious yet why this is enough. Luckily it translate almost directly to types.
 
-And here's the translation in Scala, I've shamelessly stolen from [Shapeless][Shapeless].
+And here's a translation in Scala that I've shamelessly stolen from [Shapeless][Shapeless].
 From now on, each time we'll need something that exist in [Shapeless][Shapeless], we'll just take it from there. Of course I'll mention it every time.
 I may remove some code for the sake of clarity if it's not relevant to us.
 
@@ -80,14 +78,15 @@ Take a few deep breath, we'll walk that step by step:
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=5_qs.scala"></script>
 
-`Sum` take two natural number `A` and `B`, and return another natural number `Out`.
-We now have a way to represent additions. `A + B = Out`.
+`Sum` take two natural number `A` and `B`, and return another natural number `Out`. It's using [dependent type](https://www.wikiwand.com/en/Dependent_type) to create a type level function. The type `Out` depends of `A` and `B`. In other word, we'll give Scalac an `A` and a `B`, and it will magically give us `Out`.
+
+We now have a way to represent additions. `A + B = Out`!
 
 Since we can represent, the next step is to actually compute the result of adding two natural numbers.
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=6_qs.scala"></script>
 
-This this the base case of our axiomatic definition of addition.
+This this the base case of our definition of addition.
 For any natural number `b`, `0 + b = b`
 
 We can immediately test this case using the apply method:
@@ -98,7 +97,7 @@ We can then define all the other cases by induction:
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=8_qs.scala"></script>
 
-What this says is given 2 Nat A and B,
+What this says is given 2 Nat `A` and `B`,
 `S(A) + B = A + S(B)`
 
 That's not exactly the axiom defined in Wikipedia, but it's equivalent because:
@@ -121,7 +120,7 @@ We can test it in a Scala REPL:
 
 We can do basic arithmetic in the type system :)
 
-#### Inequalities
+### Inequalities
 
 To implement quicksort, we need to be able to compare natural numbers. Again, [Shapeless][Shapeless] got us covered:
 
@@ -139,7 +138,8 @@ We can immediately test:
 
 Since a value of type `LT[_0, _1]` exists, `0 < 1`. (see [Curry–Howard correspondence](http://www.wikiwand.com/en/Curry%E2%80%93Howard_correspondence))
 
-For every other cases, we just compare the numbers predecessors `∀ x,y ∈ N. S(x) < S(y) ⇔ x < y`.
+For every other cases, we just compare the numbers predecessors:
+`∀ x,y ∈ N. S(x) < S(y) ⇔ x < y`.
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=13_qs.scala"></script>
 
@@ -155,14 +155,46 @@ Let's test it:
 
 No instance of `LT[_2, _1]` exists, which mean we can't prove that `2 < 1`.
 
-To implement quicksort, we'll also use `≥`. Shapeless does not provide that, but it does provide `≤`, We'll just use that instead.
+To implement quicksort, we'll also use `≥`. Shapeless does not provide it, but it does provide `≤`, We'll just use that instead.
 I think you'll be able to figure out how the following code works by yourself.
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=15_qs.scala"></script>
 
-### Type level list, aka HList
-#### Induction, induction, induction
-#### Ordering
+## Type level list, aka HList
+
+Alright, we know have a way to work with natural numbers, but if we're going to sort them, we also need to have a list.
+Here's is a simplified version of [Scala's list](https://github.com/scala/scala/blob/v2.11.5/src/library/scala/collection/immutable/List.scala#).
+
+```scala
+sealed abstract class List[+A]
+case object Nil extends List[Nothing]
+final case class ::[B](head: B, tail: List[B]) extends List[B]
+```
+
+So a list is recursively defined. It can be 2 things:
+- An empty list
+- A first element (head), and another list (tail) of the same type.
+
+A HList is defined in exactly the same way, except the recursion happens in the type system.
+Once again, HList are already defined in shapeless:
+
+```scala
+sealed trait HList
+final class ::[+H, +T <: HList] extends HList
+final class HNil extends HList
+```
+
+Just like a classical list, a Hlist is either empty, or a head and a tail.
+Note how similar those two definitions are! Traditionally, HList also store values. Since we're only working in the type system, and for the sake of clarity, I removed the useless code.
+
+Let's create a list of natural number!
+
+```scala
+type NS = _1 :: _0 :: _3 :: _2 :: HNil
+```
+
+### Induction, induction, induction
+### Ordering
 
 <script src="https://gist.github.com/jto/2dc882c455b79378289f.js"></script>
 
