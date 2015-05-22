@@ -53,7 +53,7 @@ easy-peasy :)
 
 ### Basic arithmetic
 
-Just to prove that's that those numbers are actually usable, we're going to implement addition.
+Just to prove that those numbers are actually usable, we're going to implement addition.
 Again Peano tells us how to do that (image taken from wikipedia):
 
 ![Peano's sum](http://upload.wikimedia.org/math/9/5/d/95dd1dc28b7774e45c5be05328e4612c.png "Image from wikipedia")
@@ -98,7 +98,7 @@ What this says is given 2 Nat `A` and `B`,
 That's not exactly the axiom defined in Wikipedia, but it's equivalent because:
 
 - `A + S(B) = S(A + B)`
-- similarly, `Succ(A) + B = S(A + B)`
+- similarly, `S(A) + B = S(A + B)`
 - therefore `A + S(B) = S(A + B) = S(A) + B`
 
 So if we try to evaluate the addition `3 + 1`, by mean of implicit resolution, the Scala compiler will go through the following steps:
