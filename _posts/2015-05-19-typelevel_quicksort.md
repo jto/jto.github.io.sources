@@ -173,7 +173,7 @@ Once again, `HList` are already defined in shapeless:
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=17_qs.scala"></script>
 
 Just like a classical list, a `HList` is either empty, or a `head` and a `tail`.
-Note how similar the two definitions are! Traditionally, `HList` also store values. Since we're only working in the type system, and for the sake of clarity, I removed the useless code.
+Note how similar the two definitions are! Traditionally, `HList` also stores values. Since we're only working in the type system, and for the sake of clarity, I removed the useless code.
 
 Let's create a type level list of natural numbers:
 
@@ -249,7 +249,7 @@ Now the inductive case:
 
 WOW. Quite a lot of types this time. Luckily, it's nothing really hard.
 
-1. First, we want extract the pivot. Since I like simplicity, we'll just extract the head of the list `H`, and the tail `T`: `new Sorted[H :: T] { ... }`
+1. First, we want to extract the pivot. Since I like simplicity, we'll just extract the head of the list `H`, and the tail `T`: `new Sorted[H :: T] { ... }`
 1. Then, we want to split the tail `T` in two sublists. All we have to do is ask the compiler to figure this out (using implicit parameters):
     - `LTEqs.Aux[T, H, lsOut]` -> give me all the types in `T` smaller or equal to `H`, and call that sublist `lsOut`.
     - `GTs.Aux[T, H, gsOut],` -> give me all the types in `T` greater than `H`, and call that sublist `gsOut`.
