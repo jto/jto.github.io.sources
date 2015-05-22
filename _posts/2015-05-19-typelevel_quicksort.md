@@ -13,6 +13,7 @@ Most people know that Scala has a pretty advanced type system. In this post, I g
 
 First thing first, if we're going to implement a sort algorithm, we need something to sort. We'll be using natural numbers.
 Of course, there's no natural numbers available out of the box in Scala's type system. We need to create a type for each and every natural number!
+
 Creating an infinity of types might end up being a little time consuming, so we'll do something a little smarter. We'll use MATH!
 
 ### Peano's axioms
@@ -26,7 +27,7 @@ Peano's axioms are a simple way to formally define what natural numbers are.
 - Natural numbers can be compared for equality. Equality is reflexive, symmetric and transitive.
 - For some statement `P`, `P` is true for all natural number if:
 	- `P` is true about `0`
-	- If `P` is true for a number `n`, (`P(n)` is true), `P` is true for `n`'s successor (`P(S(n)`) is true).
+	- If `P` is true for a number `n`, (`P(n)` is true), `P` is true for `n`'s successor (`P(S(n)` is true).
 
 You can read more about Peano's arithmetic on [Wikipedia](http://www.wikiwand.com/en/Peano_axioms).
 
@@ -36,7 +37,7 @@ Let's start by creating a Nat trait.
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=0_qs.scala"></script>
 
-> There's one special object called 0. 0 is a natural number (Since 0 is an invalid type name, we'll call it _0).
+> There's one special object called `0`. `0` is a natural number (Since `0` is an invalid type name, we'll call it `_0`).
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=1_qs.scala"></script>
 
@@ -44,7 +45,7 @@ Let's start by creating a Nat trait.
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=2_qs.scala"></script>
 
-Having defined those classes, we can represent any Natural number. Let's defined the natural numbers from 1 to 5.
+Having defined those classes, we can represent any natural number. Let's defined the natural numbers from 1 to 5.
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=3_qs.scala"></script>
 
@@ -72,7 +73,7 @@ Take a few deep breath, we'll walk that step by step:
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=5_qs.scala"></script>
 
-`Sum` take two natural number `A` and `B`, and return another natural number `Out`. It's using [dependent types](https://www.wikiwand.com/en/Dependent_type) to create a type level function. The type `Out` depends of `A` and `B`. In other word, we'll give Scalac an `A` and a `B`, and it will magically give us `Out`.
+`Sum` take two natural number `A` and `B`, and returns another natural number `Out`. It's using [dependent types](https://www.wikiwand.com/en/Dependent_type) to create a type level function. The type `Out` depends of `A` and `B`. In other word, we'll give Scalac an `A` and a `B`, and it will magically figure what `Out` is.
 
 We now have a way to represent additions. `A + B = Out`!
 
@@ -167,14 +168,14 @@ So a list is recursively defined, and can be 2 things:
 - A first element (`head`), and another list (`tail`) of the same type.
 
 To represent a list of types, we'll use `HList`. A `HList` is defined in exactly the same way, except the recursion happens in the type system.
-Once again, HList are already defined in shapeless:
+Once again, `HList` are already defined in shapeless:
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=17_qs.scala"></script>
 
-Just like a classical list, a `HList` is either empty, or a head and a tail.
-Note how similar those two definitions are! Traditionally, `HList` also store values. Since we're only working in the type system, and for the sake of clarity, I removed the useless code.
+Just like a classical list, a `HList` is either empty, or a `head` and a `tail`.
+Note how similar the two definitions are! Traditionally, `HList` also store values. Since we're only working in the type system, and for the sake of clarity, I removed the useless code.
 
-Let's create a list of natural numbers:
+Let's create a type level list of natural numbers:
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=18_qs.scala"></script>
 
@@ -197,7 +198,7 @@ We can now start to implement the resolution, starting by the usual base case; t
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=20_qs.scala"></script>
 
 Now we must ask ourself, "what are the other cases" ?
-When defining a function working with list, we usually pattern match on the first element, and recursively call ourself on the tail.
+When defining a function working with list, we usually pattern match on the first element (the `head`), and recursively call ourself on the `tail`.
 
 We'll do just that. Two cases are then possible. Either the first element is smaller or equal to the pivot, in that case we keep it:
 
