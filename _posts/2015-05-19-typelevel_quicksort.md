@@ -69,11 +69,11 @@ Meet Shapeless' `Sum`:
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=4_qs.scala"></script>
 
 You might feel a tiny bit overwhelmed by the awesomeness.
-Take a few deep breath, we'll walk that step by step:
+Take a few deep breathes, we'll walk that step by step:
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=5_qs.scala"></script>
 
-`Sum` take two natural number `A` and `B`, and returns another natural number `Out`. It's using [dependent types](https://www.wikiwand.com/en/Dependent_type) to create a type level function. The type `Out` depends of `A` and `B`. In other word, we'll give Scalac an `A` and a `B`, and it will magically figure what `Out` is.
+`Sum` takes two natural numbers `A` and `B`, and returns another natural number `Out`. It's using [dependent types](https://www.wikiwand.com/en/Dependent_type) to create a type level function. The type `Out` depends of `A` and `B`. In other words, we'll give Scalac an `A` and a `B`, and it will magically figure out what `Out` is.
 
 We now have a way to represent additions. `A + B = Out`!
 
