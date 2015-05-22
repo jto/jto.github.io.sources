@@ -6,7 +6,7 @@ summary: Implementing quicksort in Scala's typesystem
 ---
 
 <header>
-Most people know that Scala has a pretty advanced type system. In this post, I going to show how we can implement the [quicksort](http://www.wikiwand.com/en/Quicksort) algorithm using only Scala's type system. The full code of this little demo can be found [here](https://gist.github.com/jto/2dc882c455b79378289f).
+Most people know that Scala has a pretty advanced type system. In this post, I'm going to show how we can implement the [quicksort](http://www.wikiwand.com/en/Quicksort) algorithm using only Scala's type system. The full code of this little demo can be found [here](https://gist.github.com/jto/2dc882c455b79378289f).
 </header>
 
 ## Natural Numbers
@@ -157,7 +157,7 @@ I think you'll be able to figure out how the following code works by yourself.
 
 ## Type level list, aka HList
 
-Alright, we know have a way to work with natural numbers, but if we're going to sort them, we also need to have a list.
+Alright, we now have a way to work with natural numbers, but if we're going to sort them, we also need to have a list.
 But how do lists work ? Here's is a simplified version of [Scala's list](https://github.com/scala/scala/blob/v2.11.5/src/library/scala/collection/immutable/List.scala#).
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=16_qs.scala"></script>
