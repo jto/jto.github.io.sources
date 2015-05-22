@@ -27,7 +27,7 @@ Peano's axioms are a simple way to formally define what natural numbers are.
 - Natural numbers can be compared for equality. Equality is reflexive, symmetric and transitive.
 - For some statement `P`, `P` is true for all natural number if:
 	- `P` is true about `0`
-	- If `P` is true for a number `n`, (`P(n)` is true), `P` is true for `n`'s successor (`P(S(n)` is true).
+	- If `P` is true for a number `n`, (`P(n)` is true), `P` is true for `n`'s successor (`P(S(n))` is true).
 
 You can read more about Peano's arithmetic on [Wikipedia](http://www.wikiwand.com/en/Peano_axioms).
 
@@ -73,7 +73,7 @@ Take a few deep breathes, we'll walk that step by step:
 
 <script src="https://gist.github.com/jto/a9b288d5f613a1031789.js?file=5_qs.scala"></script>
 
-`Sum` takes two natural numbers `A` and `B`, and returns another natural number `Out`. It's using [dependent types](https://www.wikiwand.com/en/Dependent_type) to create a type level function. The type `Out` depends of `A` and `B`. In other words, we'll give Scalac an `A` and a `B`, and it will magically figure out what `Out` is.
+`Sum` takes two natural numbers `A` and `B`, and returns another natural number `Out`. It's using [dependent types](https://www.wikiwand.com/en/Dependent_type) to create a type level function. The type `Out` depends on `A` and `B`. In other words, we'll give Scalac an `A` and a `B`, and it will magically figure out what `Out` is.
 
 We now have a way to represent additions. `A + B = Out`!
 
