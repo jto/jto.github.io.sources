@@ -273,4 +273,7 @@ Let's run the final test:
 ![Deal with it](http://media1.giphy.com/media/uY0lFjVSvHPeU/giphy.gif)
 
 
+**Edit:** Erika Mustermann pointed out in the comment that Roman Leshchinskiy did a [type level quicksort implementation in Haskell](https://wiki.haskell.org/Type_arithmetic) a while back, based on the paper of Thomas Hallgren [Fun with Functional Dependencies](http://www.cse.chalmers.se/~hallgren/Papers/hallgren.pdf). You should have a look at it!
+
+
 [Shapeless]: https://github.com/milessabin/shapeless  "Shapeless"
