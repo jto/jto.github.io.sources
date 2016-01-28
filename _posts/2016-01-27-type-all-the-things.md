@@ -60,7 +60,7 @@ This one is a pretty simple trick we came to with [@mandubian](http://mandubian.
 
 When you work with `Future` in a real application you probably define multiple `ExecutionContext`. For example you may have an `ExecutionContext` for DB calls, and a default `ExecutionContext` for everything non blocking. Sadly, `ExecutionContext` are tricky to manage. You could easily use the default execution context for some DB calls accidentally.
 
-Just to make things worse, screwing up with `ExecutionContext` can cause really bad bugs. It's horribly easy to randomly observe thread starvation in production, just by passing a wrong `ExecutionContext` _once_. You're application suddenly stops doing anything for a few seconds, users are not happy. When the bug happens, is hard to find its cause and therefore, it is really hard to fix...
+Just to make things worse, screwing up with `ExecutionContext` can cause really bad bugs. It's horribly easy to randomly observe thread starvation in production, just by passing a wrong `ExecutionContext` _once_. Your application suddenly stops doing anything for a few seconds, users are not happy. When the bug happens, is hard to find its cause and therefore, it is really hard to fix...
 
 Luckily, the solution to this problem is extremely simple. Just give its own a type to each `ExecutionContext`. Here's a simplified example from an Play app I'm working on:
 
