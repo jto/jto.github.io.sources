@@ -116,7 +116,7 @@ There's a simple solution, just use shapeless to automatically derive instances 
 
 <script src="https://gist.github.com/jto/e0b8233ad1eded3a26e9.js?file=ColumnDerivations.scala"></script>
 
-And it's usage:
+And its usage:
 
 <script src="https://gist.github.com/jto/e0b8233ad1eded3a26e9.js?file=ColumnDerivationsUse.scala"></script>
 
