@@ -14,7 +14,7 @@ I've been playing with Scala for 7 years and with Shapeless for two or three of 
 Taken from shapeless' README:
 > Shapeless is a type class and dependent type based generic programming library for Scala.
 
-To me, Shapeless is a toolkit to leverage Scala's type system at your own profit. You may use it to have more "precise" types, like statically sized list (lists which size is know at compile time), you may also use `HList` as a better tuple.
+To me, Shapeless is a toolkit to leverage Scala's type system at your own profit. You may use it to have more "precise" types, like statically sized list (lists which size is known at compile time), you may also use `HList` as a better tuple.
 
 More generally, Shapeless can be used to make the compiler work for you, scrape some boilerplate, and gain a little extra typesafety.
 
@@ -48,13 +48,13 @@ Take our previously defined `HList`:
 
 What happens if you want to `map` over it ?
 
-The first element is an `Int`, the second element is an `String`, and the third is a `User`.
+The first element is an `Int`, the second element is a `String`, and the third is a `User`.
 Your `map` function would probably look like this:
 
 <script src="https://gist.github.com/jto/4d7a4392a84da8446f69.js?file=2_map.scala"></script>
 
-But having to pass as much function as there's elements in this `HList` is unpractical.
-Also, defining `map` this way means you need several definition of `map`. One for each `HList` size.
+But having to pass as much functions as there are elements in this `HList` is unpractical.
+Also, defining `map` this way means you need several definitions of `map`. One for each `HList` size.
 
 What you want is to pass to `map` a function that works on `Int` and `String`, and `User`, and let the compiler apply it on each elements of the `HList`. Something like this:
 
