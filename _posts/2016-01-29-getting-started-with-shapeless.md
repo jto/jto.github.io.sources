@@ -30,7 +30,7 @@ Here's list of shapeless' features I use the most, along with a short descriptio
 
 ### HList
 
-`HList` are certainly the most popular feature. `HList` are `List` where the type of every element is statically known at compile time. You may see them as "tuples on steroid". The beauty of `HList` compared to tuples is that you'll find all the essential `List` methods like `take`, `head`, `tail`, `map`, `flatMap`, `zip`, etc. plus a bunch of methods specific to `HList`.
+`HList` is certainly the most popular feature. A `HList` is a `List` where the type of every element is statically known at compile time. You may see them as "tuples on steroid". The beauty of `HList` compared to tuples is that you'll find all the essential `List` methods like `take`, `head`, `tail`, `map`, `flatMap`, `zip`, etc. plus a bunch of methods specific to `HList`.
 
 Here's a little demo:
 
@@ -56,7 +56,7 @@ Your `map` function would probably look like this:
 But having to pass as much functions as there are elements in this `HList` is unpractical.
 Also, defining `map` this way means you need several definitions of `map`. One for each `HList` size.
 
-What you want is to pass to `map` a function that works on `Int` and `String`, and `User`, and let the compiler apply it on each elements of the `HList`. Something like this:
+What you want is to pass to `map` a function that works on `Int` and `String`, and `User`, and let the compiler apply it on each element of the `HList`. Something like this:
 
 <script src="https://gist.github.com/jto/4d7a4392a84da8446f69.js?file=3_map2.scala"></script>
 
@@ -78,11 +78,11 @@ Note that polymorphic function can use implicit parameters:
 
 ### Generic
 
-`Generic` are a simple way to convert case class and product types (like tuples) to `HList`, and vice-versa:
+`Generic` is a simple way to convert case class and product types (like tuples) to `HList`, and vice-versa:
 
 <script src="https://gist.github.com/jto/4d7a4392a84da8446f69.js?file=6_gen.scala"></script>
 
-Again, the code is fairly simple. `Generic` are often used to automatically derive typeclasses instances for case classes. See my other post [Type all the things](/articles/type-all-the-things/), for real world examples. `Generic` is a great way to avoid writing macros. And that's great! I don't want to maintain my poorly written macros.
+Again, the code is fairly simple. `Generic` is often used to automatically derive typeclasses instances for case classes. See my other post [Type all the things](/articles/type-all-the-things/), for real world examples. `Generic` is a great way to avoid writing macros. And that's great! I don't want to maintain my poorly written macros.
 
 ### Tuples
 
@@ -94,11 +94,11 @@ The code is rather obvious. Most of the `HList` methods become available on tupl
 
 ### Lenses
 
-Shapeless provide a simple lenses implementation. Here's a basic example, directly taken from shapeless' examples:
+Shapeless provides a simple lenses implementation. Here's a basic example, directly taken from shapeless' examples:
 
 <script src="https://gist.github.com/jto/4d7a4392a84da8446f69.js?file=8_lenses.scala"></script>
 
-If you just need a lens from time to time and already have Shapeless in your project, it can be useful. For more advanced usage, consider a dedicated library like [monocle](https://github.com/julien-truffaut/Monocle).
+If you just need a lens from time to time and already have Shapeless in your project, it can be useful. For more advanced usages, consider a dedicated library like [monocle](https://github.com/julien-truffaut/Monocle).
 
 ### Abstracting over arity:
 
@@ -108,7 +108,7 @@ Let's say you created a class that contains a `HList`.
 
 <script src="https://gist.github.com/jto/4d7a4392a84da8446f69.js?file=9_myclass.scala"></script>
 
-You may not want to force `HList` on your users. So how do you create instances of `MyClass` wihtout using `HList` directly ? Well, you can provide a bunch of `apply` methods:
+You may not want to force `HList` on your users. So how do you create instances of `MyClass` without using `HList` directly ? Well, you can provide a bunch of `apply` methods:
 
 <script src="https://gist.github.com/jto/4d7a4392a84da8446f69.js?file=10_applys.scala"></script>
 
@@ -121,7 +121,7 @@ Note that you're actually passing a tuple to the `apply` method. Under stricter 
 ## May the source be with you, always.
 
 If you made it this far into this blog post, you may want to learn more about shapeless.
-So given the little doc currently available, you'll have to resort to reading the source code to learn more. Luckily, it's very easy to navigate in shapeless source once you've found how it's organized.
+So given the little doc currently available, you'll have to resort to reading the source code to learn more. Luckily, it's very easy to navigate in Shapeless' sources once you've found how it's organized.
 
 ### Navigating the source
 
@@ -135,8 +135,8 @@ This should be enough to find pretty much everything you need to know by yoursel
 
 ### Understating the source
 
-Luckily, everything in shapeless (apart from macros), pretty much work on the same model.
-If you wish to understand how `HList` works, I've already written about it in my article [Typelevel quicksort in Scala](/articles/typelevel_quicksort/). Once you understand `HList`, everything follows. I'd really suggest to take the time to understand how `HList` are built, and how you `map` over a `HList`, even if you do not plan to use Shapeless.
+Everything in shapeless (apart from macros), pretty much work on the same model.
+If you wish to understand how `HList` works, I've already written about it in my article [Typelevel quicksort in Scala](/articles/typelevel_quicksort/). Once you understand `HList`, everything should follow. I'd really suggest to take the time to understand how `HList` are built, and how you `map` over a `HList`, even if you do not plan to use Shapeless.
 
 
 ## Conclusion
