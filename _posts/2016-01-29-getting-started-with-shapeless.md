@@ -6,7 +6,7 @@ summary: Getting started with shapeless
 ---
 
 <header>
-I've been playing with Scala for 7 years and with Shapeless for two or three of years now. This library and its community is one of things that keeps Scala attractive to me. [@brikis98](https://twitter.com/brikis98?lang=fr) pointed out that at little more doc wouldn't hurt. I can only agree with him. There's very little resources available to people discovering Shapeless and type level programming in Scala. Hopefully this post will help newcomers.
+I've been playing with Scala for 7 years and with Shapeless for a couple of years now. This library and its community is one among the reasons that keep Scala attractive to me. [@brikis98](https://twitter.com/brikis98?lang=fr) pointed out that at little more doc wouldn't hurt. I can only agree with him. There's very little resources available to people discovering Shapeless and type level programming in Scala. Hopefully this post will help newcomers understanding the library basics.
 </header>
 
 ## What's shapeless, and why should I care ?
@@ -141,4 +141,4 @@ If you wish to understand how `HList` works, I've already written about it in my
 
 ## Conclusion
 
-This article is meant to give you an overview of the basic use cases. I hope it gives newcomers the basic infos required to start discovering type level programming in Scala using Shapeless. If anything is unclear, or just not covered in this article, let me know in the comments or ping me on [twitter](https://twitter.com/skaalf). I'll try to improve it over time. If you know more resources on Shapeless or type level programming, I'd be happy to link them here.
+This article is meant to give you an overview of the basic use cases. If anything is unclear, or just not covered in this article, let me know in the comments or ping me on [twitter](https://twitter.com/skaalf). I'll try to improve it over time. If you know more resources on Shapeless or type level programming, I'd be happy to link them here.
