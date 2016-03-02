@@ -6,7 +6,7 @@ summary: Getting started with shapeless
 ---
 
 <header>
-I've been playing with Scala for 7 years and with Shapeless for a couple of years now. This library and its community is one among the reasons that keep Scala attractive to me. [@brikis98](https://twitter.com/brikis98?lang=fr) pointed out that at little more doc wouldn't hurt. I can only agree with him. There's very little resources available to people discovering Shapeless and type level programming in Scala. Hopefully this post will help newcomers understanding the library basics.
+I've been playing with Scala for 7 years and with Shapeless for a couple of years now. This library and its community is one among the reasons that keep Scala attractive to me. [@brikis98](https://twitter.com/brikis98?lang=fr) pointed out that at little more doc wouldn't hurt. I can only agree with him. There's very little resources available to people discovering Shapeless and type level programming in Scala. Hopefully this post will help newcomers understand the library basics.
 </header>
 
 ## What's shapeless, and why should I care ?
