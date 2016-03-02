@@ -120,7 +120,7 @@ Note that you're actually passing a tuple to the `apply` method. Under stricter 
 
 ## May the source be with you, always.
 
-If you made it this far into this blog post, you probably want to learn more about shapeless.
+If you made it this far into this blog post, you may want to learn more about shapeless.
 So given the little doc currently available, you'll have to resort to reading the source code to learn more. Luckily, it's very easy to navigate in shapeless source once you've found how it's organized.
 
 ### Navigating the source
@@ -136,11 +136,9 @@ This should be enough to find pretty much everything you need to know by yoursel
 ### Understating the source
 
 Luckily, everything in shapeless (apart from macros), pretty much work on the same model.
-If you wish to understand how `HList` works, I've already written about it in my article [Typelevel quicksort in Scala](/articles/typelevel_quicksort/).
+If you wish to understand how `HList` works, I've already written about it in my article [Typelevel quicksort in Scala](/articles/typelevel_quicksort/). Once you understand `HList`, everything follows. I'd really suggest to take the time to understand how `HList` are built, and how you `map` over a `HList`, even if you do not plan to use Shapeless.
 
 
 ## Conclusion
 
-This article is meant to give you an overview of the basic use cases. I hope it gives newcomers the basic infos required to start discovering type level programming in Scala using Shapeless. If anything is unclear, or just not covered in this article, let me know in the comments or ping me on [twitter](https://twitter.com/skaalf).
-
-I'll try to improve it over time. If you know more resources on Shapeless or type level programming, I'd be happy to link them here.
+This article is meant to give you an overview of the basic use cases. I hope it gives newcomers the basic infos required to start discovering type level programming in Scala using Shapeless. If anything is unclear, or just not covered in this article, let me know in the comments or ping me on [twitter](https://twitter.com/skaalf). I'll try to improve it over time. If you know more resources on Shapeless or type level programming, I'd be happy to link them here.
