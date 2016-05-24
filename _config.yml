@@ -2,3 +2,5 @@ url: http://jto.github.io
 exclude: [ 'README.md', 'CONTRIBUTING.md', 'node_modules', 'package.json', 'Gruntfile.js' ]
 markdown: rdiscount
 permalink: /articles/:title
+name: jto.github.io
+description: Writing about scalable distributed web applications with modern tools.
