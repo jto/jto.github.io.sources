@@ -11,19 +11,18 @@ The new version of my [validation library](https://github.com/jto/validation) is
 
 ## What's jto/validation again ?
 
-jto/validation is a library originally born to replace play-json validation features. It aimed to generalize the library to be able to use it on other data formats. jto/validation never made it to Play because it was thought to be a leap to big (at least for Play 2.x).
+jto/validation is a library originally born to replace play-json validation features. It aimed to generalize the library to support other data formats. jto/validation never made it to Play because it was thought to be to big a leap (at least for Play 2.x).
 
-Today, the library supports JSON (both play-json, json4s, and "native"), play forms, XML, CSV. It is also easily extensible to any data format.
+Today, the library supports JSON (both play-json, json4s, and "native"), play forms, XML and CSV. It is also easily extensible to any data format.
 
 ## Why 2.0 ?
 
 After using v1.x for years, we had a pretty clear idea on how to improve it. Here's are the most important evolutions:
 
-- We got rid of play-functional, and replaced it with [cats](https://github.com/typelevel/cats). Cats is well written, well maintained, well documented, complete and sound, and is a great fit for us.
-- Thanks to cats, jto/validation now supports Scala.js. You can now write Rules and Writes, and share them between the server and the browser.
+- We got rid of [play-functional](https://github.com/playframework/playframework/tree/master/framework/src/play-functional/src/main/scala/play/api/libs/functional), and replaced it with [cats](https://github.com/typelevel/cats). Cats is well written, well maintained, well documented, complete and sound, and is a great fit for us.
+- Since jto/validation is decoupled from Play, it now supports Scala.js. You can now write Rules and Writes, and share them between the server and the browser.
 - The library now has a proper package name, and does not steal Play's anymore.
 - jto/validation 2.0 supports Play 2.5.x (playjson only)
-- All the dependencies have been upgraded.
 
 ### Other improvements
 
@@ -41,7 +40,7 @@ Version 2.0 comes with an [all new and shiny gitbook](http://jto.github.io/valid
 
 ## Is it backward compatible with 1.x ?
 
-Almost ;) You'll have to do a (tiny) bit of work to migrate from 1.x to 2.0. Fear not, the migration has been tested, and the required steps documented [here](http://jto.github.io/validation/docs/book/V2MigrationGuide.html). Migrating should take a few minutes at most. The compiler will find all the problems for you, and will even give you hints on how to migrate in case of deprecations.
+Almost ;) You'll have to do a (tiny) bit of work to migrate from 1.x to 2.0. Fear not, the migration has been tested, and the required steps documented [here](http://jto.github.io/validation/docs/book/V2MigrationGuide.html). Migrating should take a few minutes at most. The compiler will also guide you through the migration with deprecation warnings giving indications on how to migrate
 
 ## Contributing
 
@@ -49,4 +48,5 @@ Feedbacks (positive and negative), bug reports and pull requests have always bee
 
 ## Credits
 
-All credits for this new version should go to [Olivier Blanvillain](https://github.com/OlivierBlanvillain), who did most of the work. He, amongst other things, added Scala.js support, created the git book and replaced play-functional by [cats](https://github.com/typelevel/cats). Olivier is the first official contributor with commit permissions.
+The library now has a second maintainer: [Olivier Blanvillain](https://github.com/OlivierBlanvillain).
+Credits for this new version should go to him. He, amongst other things, added Scala.js support, created the git book and replaced play-functional by [cats](https://github.com/typelevel/cats).
