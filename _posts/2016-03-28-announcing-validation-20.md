@@ -44,7 +44,7 @@ Almost ;) You'll have to do a (tiny) bit of work to migrate from 1.x to 2.0. Fea
 
 ## Contributing
 
-Feedbacks (positive and negative), bug reports and pull requests have always been more than welcome. Come talk with is on [github](https://github.com/jto/validation), or in [the gitter channel](https://gitter.im/jto/validation).
+Feedbacks (positive and negative), bug reports and pull requests have always been more than welcome. Come talk with us on [github](https://github.com/jto/validation), or in [the gitter channel](https://gitter.im/jto/validation).
 
 ## Credits
 
