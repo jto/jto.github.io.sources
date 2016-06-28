@@ -6,7 +6,7 @@ summary: Announcing Validation 2.0
 ---
 
 <header>
-The new version of my [validation library](https://github.com/jto/validation) is out After a few years in production, it was time for it to undergo a massive update.
+The new version of my [validation library](https://github.com/jto/validation) is out. After a few years in production, it was time for it to undergo a massive update.
 </header>
 
 ## What's jto/validation again ?
@@ -22,7 +22,7 @@ After using v1.x for years, we had a pretty clear idea on how to improve it. Her
 - We got rid of [play-functional](https://github.com/playframework/playframework/tree/master/framework/src/play-functional/src/main/scala/play/api/libs/functional), and replaced it with [cats](https://github.com/typelevel/cats). Cats is well written, well maintained, well documented, complete and sound, and is a great fit for us.
 - Since jto/validation is decoupled from Play, it now supports Scala.js. You can now write Rules and Writes, and share them between the server and the browser.
 - The library now has a proper package name, and does not steal Play's anymore.
-- jto/validation 2.0 supports Play 2.5.x (playjson only)
+- jto/validation 2.0 supports Play 2.5.x (via the dedicated playjson module)
 
 ### Other improvements
 
@@ -40,7 +40,7 @@ Version 2.0 comes with an [all new and shiny gitbook](http://jto.github.io/valid
 
 ## Is it backward compatible with 1.x ?
 
-Almost ;) You'll have to do a (tiny) bit of work to migrate from 1.x to 2.0. Fear not, the migration has been tested, and the required steps documented [here](http://jto.github.io/validation/docs/book/V2MigrationGuide.html). Migrating should take a few minutes at most. The compiler will also guide you through the migration with deprecation warnings giving indications on how to migrate
+Almost ;) You'll have to do a (tiny) bit of work to migrate from 1.x to 2.0. Fear not, the migration has been tested, and the required steps documented [here](http://jto.github.io/validation/docs/book/V2MigrationGuide.html). Migrating should take a few minutes at most. The compiler will also guide you through the migration with deprecation warnings giving clear indications on how to migrate
 
 ## Contributing
 
