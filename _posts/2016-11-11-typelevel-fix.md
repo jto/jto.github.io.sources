@@ -11,7 +11,7 @@ I've been reading and learning recently about recursion schemes. While all this 
 
 ## Disclaimer
 
-This post assumes some familiarity with type level programming in Scala, specifically I use a bit of Shapeless. A basic understanding of the fixpoint type `Fix`. If you want to learn about those, the following resources have been helpful to me:
+This post assumes some familiarity with type level programming in Scala, specifically I use a bit of Shapeless, and understanding of the fixpoint type `Fix`. If you want to learn about it, the following resources have been helpful to me:
 
 - [Pure Functional Database Programming with Fixpoint Types](https://www.youtube.com/watch?v=7xSfLPD6tiQ) by [Rob Norris](https://github.com/tpolecat) at [Scala World 2016](https://scala.world/)
 - [The Y Combinator (Slight Return)](http://mvanier.livejournal.com/2897.html) by [mvanier](http://mvanier.livejournal.com/).
@@ -21,11 +21,11 @@ This post assumes some familiarity with type level programming in Scala, specifi
 
 ## What is this about ?
 
-The basic idea is actually pretty simple. Given that you can abstract away recursion in a type definition using `Fix`, is it possible to create type that abstract away typelevel recursion.
+The basic idea is actually pretty simple. Given that you can abstract away recursion in a type definition using `Fix`, is it possible to create type that abstracts typelevel recursion.
 
 Put simply, if I can use `Fix` to implement a `List`, is there something (`HFix` ?) that I can use to implement `HList` without explicitly having to deal with typelevel recursion.
 
-**SPOILER ALERT***: The answer is YES. And it ends up being (almost) as simple as `Fix`.
+**SPOILER ALERT**: The answer is YES. And it ends up being (almost) as simple as `Fix`.
 
 ## What's `Fix` again ?
 
@@ -68,7 +68,7 @@ And it works!
 
 I must admit it took me a bit of time to come up with the following piece of code. I'm quite satisfied with it thought.
 
-I must admit it took me a bit of time the first time the really get `Fix` at first. I guess it's one of those ideas that are really simple, but somehow hard to get until you got the "AHAH!" moment. Writing this was in the same vein. A lot of struggling, and "AHAH!" it's actually really simple (then I felt bad for my having struggled so much on this...).
+It also took me some time to really get `Fix` at first. I guess it's one of those ideas that are really simple, but somehow hard to get until the "AHAH!" moment. Writing this was in the same vein. A lot of struggling, and "AHAH!" it's actually really simple (then I felt bad for having struggled so much on this...).
 
 Here's the code (Yeah I know, I'm terrible at naming things. Any help appreciated):
 
@@ -80,8 +80,8 @@ trait INil extends Inductive
 
 So just like in the definition of `Fix`, this type is recursive. There's 2 little tricks to understand:
 
-- Since `R` has kind *, we have recursion at the type level. So contrarily to `Fix`, not every element in the recursion have the same type.
-- I add a `INil` type. At some point we'll need to stop the recursion, (we can't define "infinite" types). This type will have no inhabitant.
+- Since `R` has kind `*`, we have recursion at the type level. So contrarily to `Fix`, not every element in the recursion have the same type.
+- I added a `INil` type. At some point we'll need to stop the recursion. This type will have no inhabitant, and just serves that purpose.
 
 ## Creating an HList
 
@@ -96,6 +96,7 @@ def hcons[X, XS <: Inductive](x: X, xs: XS): X :: XS = HFix[ListF[X, ?], XS](Con
 ```
 
 I added type aliases, they're really not necessary, as `Scalac` infers types perfectly, but I think they help the reader.
+
 I think `hnil` is particularly interesting. The empty `HList` is `Nil` and the end of type level recursion denoted by `INil`.
 
 Now can I build HLists ?
@@ -107,7 +108,8 @@ val xs: Int :: Int :: Int :: HNil = hcons(1, hcons(2, hcons(3, hnil)))
 
 Yep, no problem at all.
 
-## C'est le caca, c'est le cata, c'est le catamorphisme (Sorry this joke does not translate).
+## C'est le caca, c'est le cata, c'est le catamorphisme
+(Sorry this joke does not translate).
 
 So far we've defined ways of building `List` and `HList` in terms of `Fix` and `HFix` respectively.
 From there it seems only natural to try to implement a catamorphism.
@@ -135,11 +137,14 @@ implicit def listFFunctor[T] =
 Now let's try something simple:
 
 ```scala
-  val sumList =
-    cata[Int, ListF[Int, ?]] {
-      case Nil => 0
-      case Cons(x, n) => x + n
-    } _
+
+val xs = cons(1, cons(2, cons(3, nil)))
+
+val sumList =
+  cata[Int, ListF[Int, ?]] {
+    case Nil => 0
+    case Cons(x, n) => x + n
+  } _
 
 sumList(xs) shouldBe 6
 ```
@@ -183,11 +188,17 @@ object Cata extends LowPriorityCata {
       def apply(t: HFix[F, INil]) = f(t.f)
     }
 }
+
+def cata[HF <: Poly, L <: Inductive](l: L, f: HF)(implicit c: Cata[HF, L]) =
+  c(l)
 ```
 
 Interestingly, you also only need a functor for `F`. Now let's try this:
 
 ```scala
+
+val xs = hcons(1, hcons(2, hcons(3, hnil)))
+
 object plus extends Poly1 {
   implicit def caseNil =
     at[ListF[Nil, INil]] { _ => 0 }
@@ -214,7 +225,7 @@ final case class Inr[+H, +T](tail: T) extends Cocons[H, T]
 type :+:[H, T <: Inductive] = HFix[Cocons[H, ?], T]
 ```
 
-Now the constructor for `Coproduct` is a bt more complex that `List`. We need to be able to `Inject` values into our `Coproduct`. Let's implement that. The implementation is very similar to the one in Shapeless:
+Now the constructor for `Coproduct` is a bit more complex that `List`. We need to be able to `Inject` values into our `Coproduct`. Let's implement that. The implementation is very similar to the one in Shapeless:
 
 ```scala
 trait Inject[C <: Inductive, I] {
@@ -240,7 +251,7 @@ class MkCoproduct[C <: Inductive] {
 def Coproduct[C <: Inductive] = new MkCoproduct[C]
 ```
 
-Let's test that:
+A simple test again:
 
 ```scala
 Coproduct[Int :+: String :+: INil](1) shouldBe HFix(Inl(1))
@@ -249,6 +260,18 @@ illTyped("Coproduct[Int :+: String :+: INil](1.2)")
 ```
 
 Yep. it works :).
+
+## Going further
+
+All this raised a lot of other questions:
+
+- Can this be used to actually build something useful ?
+- What about corecursive types ? Do they exist ? Can we implement an typelevel anamorphism ?
+- Can we define "infinite" types (like a Stream of types)? Would it make sense ? This would probably require lazyness at the type level.
+
+I guess I'm just going to continue playing around with this for a while.
+Any new idea or feedback is appreciated, either in the comments or on twitter.
+
 
 
 
