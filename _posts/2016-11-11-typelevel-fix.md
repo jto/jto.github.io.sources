@@ -141,15 +141,115 @@ Now let's try something simple:
       case Nil => 0
       case Cons(x, n) => x + n
     } _
-```
 
-And a simple test:
-
-```scala
 sumList(xs) shouldBe 6
 ```
 
 It works!
+
+
+### Catamorphism for `HFix`
+
+Now let's try to implement a catamorphism for `HFix`. This one is slightly more involved. I'm going to need polymorphic functions here. Luckily shapeless provide those:
+
+```scala
+trait Cata[HF, L <: Inductive] extends DepFn1[L]
+
+trait LowPriorityCata {
+  implicit def hfixCata[HF <: Poly, F[_], T <: Inductive, OutC](
+    implicit
+    fc: Functor[F],
+    cata: Cata.Aux[HF, T, OutC],
+    f: Case1[HF, F[OutC]]
+  ) =
+    new Cata[HF, HFix[F, T]] {
+      type Out = f.Result
+      def apply(t: HFix[F, T]) =
+        f(fc.map(t.f)(t => cata(t)))
+    }
+}
+
+object Cata extends LowPriorityCata {
+  type Aux[HF <: Poly, L <: Inductive, Out0] = Cata[HF, L] { type Out = Out0 }
+
+  def apply[HF <: Poly, L <: Inductive](implicit c: Cata[HF, L]): Aux[HF, L, c.Out] = c
+
+  implicit def lastCata[HF <: Poly, F[_]](
+    implicit
+    fc: Functor[F],
+    f: Case1[HF, F[INil]]
+  ): Aux[HF, HFix[F, INil], f.Result] =
+    new Cata[HF, HFix[F, INil]] {
+      type Out = f.Result
+      def apply(t: HFix[F, INil]) = f(t.f)
+    }
+}
+```
+
+Interestingly, you also only need a functor for `F`. Now let's try this:
+
+```scala
+object plus extends Poly1 {
+  implicit def caseNil =
+    at[ListF[Nil, INil]] { _ => 0 }
+  implicit def caseInt =
+    at[ListF[Int, Int]] {
+      case Cons(x, n) => x + n
+    }
+}
+
+cata(xs, plus) shouldBe 6
+```
+
+And again in works !
+
+## Coproducts
+
+The last thing I wanted to try was to implement `Coproduct` in terms of `HFix`.
+
+```scala
+sealed trait Cocons[+H, +T]
+final case class Inl[+H, +T](head: H) extends Cocons[H, T]
+final case class Inr[+H, +T](tail: T) extends Cocons[H, T]
+
+type :+:[H, T <: Inductive] = HFix[Cocons[H, ?], T]
+```
+
+Now the constructor for `Coproduct` is a bt more complex that `List`. We need to be able to `Inject` values into our `Coproduct`. Let's implement that. The implementation is very similar to the one in Shapeless:
+
+```scala
+trait Inject[C <: Inductive, I] {
+  def apply(i: I): C
+}
+
+object Inject {
+  def apply[C <: Inductive, I](implicit inject: Inject[C, I]): Inject[C, I] = inject
+
+  implicit def tlInject[H, T <: Inductive, I](implicit tlInj: Inject[T, I]): Inject[H :+: T, I] = new Inject[H :+: T, I] {
+    def apply(i: I): H :+: T = HFix(Inr(tlInj(i)))
+  }
+
+  implicit def hdInject[H, T <: Inductive]: Inject[H :+: T, H] = new Inject[H :+: T, H] {
+    def apply(i: H): H :+: T = HFix(Inl(i))
+  }
+}
+
+class MkCoproduct[C <: Inductive] {
+  def apply[T](t: T)(implicit inj: Inject[C, T]): C = inj(t)
+}
+
+def Coproduct[C <: Inductive] = new MkCoproduct[C]
+```
+
+Let's test that:
+
+```scala
+Coproduct[Int :+: String :+: INil](1) shouldBe HFix(Inl(1))
+Coproduct[Int :+: String :+: INil]("bar") shouldBe HFix(Inr(HFix(Inl("bar"))))
+illTyped("Coproduct[Int :+: String :+: INil](1.2)")
+```
+
+Yep. it works :).
 
 
 
