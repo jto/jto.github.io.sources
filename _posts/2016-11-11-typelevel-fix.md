@@ -1,0 +1,155 @@
+---
+layout: post
+title: 'Typelevel fix point'
+tags: scala, typelevel, recursion
+summary: Typelevel fix point
+---
+
+<header>
+I've been reading and learning recently about recursion schemes. While all this is really new to me, it gave me a funny idea. I'll show the results in this post. Who knows, it may end up being useful to someone :). If you want to jump into the code, it lives [here](https://github.com/jto/hfix). See the [tests](https://github.com/jto/hfix/blob/master/src/test/scala/tests.scala) for examples.
+</header>
+
+## Disclaimer
+
+This post assumes some familiarity with type level programming in Scala, specifically I use a bit of Shapeless. A basic understanding of the fixpoint type `Fix`. If you want to learn about those, the following resources have been helpful to me:
+
+- [Pure Functional Database Programming with Fixpoint Types](https://www.youtube.com/watch?v=7xSfLPD6tiQ) by [Rob Norris](https://github.com/tpolecat) at [Scala World 2016](https://scala.world/)
+- [The Y Combinator (Slight Return)](http://mvanier.livejournal.com/2897.html) by [mvanier](http://mvanier.livejournal.com/).
+- [Understanding F-Algebras](https://www.schoolofhaskell.com/user/bartosz/understanding-algebras) by [Bartosz Milewski](https://www.schoolofhaskell.com/user/bartosz)
+- [Datatype generic programming in Scala - Fixing on Cata](http://debasishg.blogspot.fr/2011/07/datatype-generic-programming-in-scala.html) by [Debasish Ghosh](https://twitter.com/debasishg).
+- [Matryoshka's README](https://github.com/slamdata/matryoshka).
+
+## What is this about ?
+
+The basic idea is actually pretty simple. Given that you can abstract away recursion in a type definition using `Fix`, is it possible to create type that abstract away typelevel recursion.
+
+Put simply, if I can use `Fix` to implement a `List`, is there something (`HFix` ?) that I can use to implement `HList` without explicitly having to deal with typelevel recursion.
+
+**SPOILER ALERT***: The answer is YES. And it ends up being (almost) as simple as `Fix`.
+
+## What's `Fix` again ?
+
+Ok so just to make sure I understood the everything I've read, I started by reimplementing `Fix`. This is of course a  trivial job, as it just fit in one line:
+
+```scala
+  case class Fix[F[_]](f: F[Fix[F]])
+```
+
+That's great, but it does not tell me how to implement a `List`. So I went on and implemented a `List[A]`. Most of the article I've read fix the `A` and implement a `IntList`. Since I like  bit of challenge and wanted to be sure I understood everything, I went to the slightly harder path of implementing a trully generic `List`.
+
+A list element is either `Cons` or `Nil`. Apart for some fiddling with the types and the absence of recursion, this should be pretty easy to understand:
+
+```scala
+trait BaseList
+trait ListF[+A, +S] extends BaseList
+trait Nil extends ListF[Nothing, Nothing]
+object Nil extends Nil
+case class Cons[A, +S](x: A, xs: S) extends ListF[A, S]
+```
+
+Now that I have the basic pieces, the only thing left to do is to actually build a `List`. Let's define a couple of constructors:
+
+```scala
+type List[A] = Fix[ListF[A, ?]]
+def nil[A] = Fix[ListF[A, ?]](Nil)
+def cons[A] = (x: A, xs: List[A]) => Fix[ListF[A, ?]](Cons(x, xs))
+```
+
+And now we can build a `List`:
+
+```scala
+val xs = cons(1, cons(2, cons(3, nil)))
+```
+
+And it works!
+
+
+## How do I implement the same thing at the type level ?
+
+I must admit it took me a bit of time to come up with the following piece of code. I'm quite satisfied with it thought.
+
+I must admit it took me a bit of time the first time the really get `Fix` at first. I guess it's one of those ideas that are really simple, but somehow hard to get until you got the "AHAH!" moment. Writing this was in the same vein. A lot of struggling, and "AHAH!" it's actually really simple (then I felt bad for my having struggled so much on this...).
+
+Here's the code (Yeah I know, I'm terrible at naming things. Any help appreciated):
+
+```scala
+trait Inductive
+case class HFix[F[_], R <: Inductive](f: F[R]) extends Inductive
+trait INil extends Inductive
+```
+
+So just like in the definition of `Fix`, this type is recursive. There's 2 little tricks to understand:
+
+- Since `R` has kind *, we have recursion at the type level. So contrarily to `Fix`, not every element in the recursion have the same type.
+- I add a `INil` type. At some point we'll need to stop the recursion, (we can't define "infinite" types). This type will have no inhabitant.
+
+## Creating an HList
+
+Now how does this help me implementing `HList` ? Well, there it becomes really cool. You see, the only difference between a `List` and a `HList` is the recursion scheme. A `HList` is recursive a both the type and value level at the same time, while a `List` is only recursive at the value level. Apart from that, they are the same. Therefore, I can reuse the previously define `Nil` and `Cons`, and I just have to provide new constructors:
+
+```scala
+type HNil = HFix[ListF[Nil, ?], INil]
+type ::[X, XS <: Inductive] = HFix[ListF[X, ?], XS]
+
+val hnil: HNil = HFix[ListF[Nil, ?], INil](Nil)
+def hcons[X, XS <: Inductive](x: X, xs: XS): X :: XS = HFix[ListF[X, ?], XS](Cons(x, xs))
+```
+
+I added type aliases, they're really not necessary, as `Scalac` infers types perfectly, but I think they help the reader.
+I think `hnil` is particularly interesting. The empty `HList` is `Nil` and the end of type level recursion denoted by `INil`.
+
+Now can I build HLists ?
+
+```scala
+val hs: Int :: String :: HNil = hcons(1, hcons("bar", hnil))
+val xs: Int :: Int :: Int :: HNil = hcons(1, hcons(2, hcons(3, hnil)))
+```
+
+Yep, no problem at all.
+```
+
+## C'est le caca, c'est le cata, c'est le catamorphisme (Sorry this joke does not translate).
+
+So far we've defined ways of building `List` and `HList` in terms of `Fix` and `HFix` respectively.
+From there it seems only natural to try to implement a catamorphism.
+
+For `Fix` it's pretty straightforward:
+
+```scala
+def cata[A, F[_]](f: F[A] => A)(t: Fix[F])(implicit fc: Functor[F]): A =
+  f(fc.map(t.f)(cata[A, F](f)))
+```
+
+Of course we need a functor for `F`. Since we're going to test this with our newly defined `List`, I'm going to define it immediately for `ListF`:
+
+```scala
+implicit def listFFunctor[T] =
+  new Functor[ListF[T, ?]] {
+    def map[A, B](fa: ListF[T, A])(f: A => B): ListF[T, B] =
+      fa match {
+        case Nil => Nil
+        case Cons(x, xs) => Cons(x, f(xs))
+      }
+  }
+```
+
+Now let's try something simple:
+
+```scala
+  val sumList =
+    cata[Int, ListF[Int, ?]] {
+      case Nil => 0
+      case Cons(x, n) => x + n
+    } _
+```
+
+And a simple test:
+
+```scala
+sumList(xs) shouldBe 6
+```
+
+It works!
+
+
+
