@@ -106,7 +106,6 @@ val xs: Int :: Int :: Int :: HNil = hcons(1, hcons(2, hcons(3, hnil)))
 ```
 
 Yep, no problem at all.
-```
 
 ## C'est le caca, c'est le cata, c'est le catamorphisme (Sorry this joke does not translate).
 
